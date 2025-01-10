@@ -1,0 +1,17 @@
+{
+  "name": "whackerlinklibjs",
+  "version": "1.0.0",
+  "description": "",
+  "license": "GPL-3.0",
+  "author": "Caleb, K4PHP (_php_)",
+  "type": "module",
+  "main": "PacketType.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "wav": "^1.0.2",
+    "ws": "^8.18.0"
+  }
+}
