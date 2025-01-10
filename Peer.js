@@ -136,6 +136,7 @@ class Peer {
             const type = Number(parsed.type);
             const payload = parsed.data;
 
+            // TODO: Properly handle all these packet types
             switch (type) {
                 case PacketType.U_REG_RSP:
                     this._emit('unitRegistrationResponse', new U_REG_RSP(payload));
@@ -176,13 +177,20 @@ class Peer {
 
     /**
      * Schedules a reconnect attempt.
+     * Keeps retrying indefinitely until a connection is established.
      * @private
      */
     _scheduleReconnect() {
         if (!this.reconnectTimeout) {
             this.reconnectTimeout = setTimeout(() => {
-                console.log('Lost connection to master; reconnecting...');
+                console.log(`Attempting to reconnect to ${this.address}:${this.port}...`);
                 this._connectToServer();
+
+                this.reconnectTimeout = null;
+
+                if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
+                    this._scheduleReconnect();
+                }
             }, this.reconnectInterval);
         }
     }
