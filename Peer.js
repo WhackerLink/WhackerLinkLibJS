@@ -65,7 +65,8 @@ class Peer {
             this._clearReconnectTimeout();
         });
 
-        this.socket.on('close', () => {
+        this.socket.on('close', (code, reason) => {
+            console.log(`Connection to master closed; Code: ${code}, Reason: ${reason}`);
             this._emit('close');
             this._scheduleReconnect();
         });
